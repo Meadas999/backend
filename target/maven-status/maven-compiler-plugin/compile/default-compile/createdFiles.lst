@@ -1,0 +1,6 @@
+com\jet\appback\services\NuserService.class
+com\jet\appback\repository\NuserRepository.class
+com\jet\appback\models\BaseUser.class
+com\jet\appback\AppBackApplication.class
+com\jet\appback\models\Nuser.class
+com\jet\appback\controllers\DockerMessageController.class

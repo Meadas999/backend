@@ -1,0 +1,8 @@
+#
+#Mon Oct 17 22:55:06 CEST 2022
+com.jet.appback.repository.NuserRepository=org.springframework.data.repository.Repository
+com.jet.appback.models.BaseUser=javax.persistence.Entity
+com.jet.appback.models.Nuser=javax.persistence.Entity
+com.jet.appback.AppBackApplication=org.springframework.stereotype.Component,org.springframework.boot.SpringBootConfiguration
+com.jet.appback.controllers.DockerMessageController=org.springframework.stereotype.Component
+com.jet.appback.services.NuserService=org.springframework.stereotype.Component
