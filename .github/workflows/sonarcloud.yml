@@ -16,14 +16,7 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v1
         with:
-          java-version: 17
-      - name: Set up MySql server
-        uses: mirromutth/mysql-action@v1.1
-        with:
-          mysql user: 'meadas'
-          mysql password: ${{ secrets.DatabasePassword }}
-        
-        
+          java-version: 17  
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
@@ -40,4 +33,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Meadas999_backend
+        run: mvn -B -DskipTests verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Meadas999_backend
