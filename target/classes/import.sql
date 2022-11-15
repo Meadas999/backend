@@ -1,3 +1,3 @@
-INSERT INTO BaseUser(DTYPE,Birthdate,FirstName,Insertion,LastName) VALUES('Nuser','2005-08-12','Amier','','Alchazli');
-INSERT INTO BaseUser(DTYPE,Birthdate,FirstName,Insertion,LastName) VALUES('Nuser','2005-08-12','Kaas','','Alchazli');
-INSERT INTO BaseUser(DTYPE,Birthdate,FirstName,Insertion,LastName) VALUES('Nuser','2005-08-12','Boter','','Alchazli');
+INSERT INTO BaseUser(DTYPE,email,Birthdate,FirstName,Insertion,LastName) VALUES('Nuser','amier1234@hotmail.com','2005-08-12','Amier','','Alchazli');
+INSERT INTO BaseUser(DTYPE,email,Birthdate,FirstName,Insertion,LastName) VALUES('Nuser','kaas@example.com','2005-08-12','Kaas','','Alchazli');
+INSERT INTO BaseUser(DTYPE,email,Birthdate,FirstName,Insertion,LastName) VALUES('Nuser','boter@example.com','2005-08-12','Boter','','Alchazli');
