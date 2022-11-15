@@ -15,6 +15,7 @@ public abstract class BaseUser {
     private String lastname;
     private String insertion;
     private LocalDate birthdate;
+    /*private boolean FullyRegistered;*/
 
     public String getEmail() {
         return email;
@@ -22,6 +23,7 @@ public abstract class BaseUser {
 
     public void setEmail(String email) {
         this.email = email;
+
     }
 
     public BaseUser() {
