@@ -3,14 +3,9 @@ package com.jet.appback.services;
 import com.jet.appback.models.Nuser;
 import com.jet.appback.repository.NuserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class NuserService {
@@ -27,6 +22,8 @@ public class NuserService {
         nuserRepository.save(nuser);
     }
 
+    public long GetIdByEmail(String email) { return nuserRepository.findIdByEmail(email); }
+
     public String updateuser(Nuser nuser)
     {
         if(nuser.getId() == 0)
@@ -39,7 +36,7 @@ public class NuserService {
             return  "User is updated succesfull";
         }
     }
-    public Nuser getuser(String email)
+    public Nuser getuserbyemail(String email)
     {
         Nuser user = nuserRepository.findByEmailAddress(email);
         if(user != null)
@@ -51,6 +48,25 @@ public class NuserService {
             throw new RuntimeException("User doesn't exist");
         }
 
+    }
+    public Nuser getUserById(long id)
+    {
+        Nuser user = nuserRepository.getReferenceById(id);
+        if(user != null)
+        {
+            return user;
+        }
+        else
+        {
+            throw new RuntimeException("User doesn't exist");
+        }
+
+    }
+
+    public List<Nuser> getOtherUsersByEmail(String email)
+    {
+       List<Nuser> users = nuserRepository.findAllByEmailIsNotContaining(email);
+       return users;
     }
 
 

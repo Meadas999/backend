@@ -1,6 +1,5 @@
 package com.jet.appback.controllers;
 
-import com.jet.appback.configuration.SecurityConfig;
 import com.jet.appback.models.Nuser;
 import com.jet.appback.services.NuserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,34 +10,35 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
-@RequestMapping
+@RequestMapping("/user")
 public class NuserController {
 
     @Autowired
     private NuserService nuserService;
     private ClientRegistration registration;
 
-    public NuserController(ClientRegistrationRepository registrations) {
+    public NuserController(ClientRegistrationRepository registrations, NuserService nuserService ) {
         this.registration = registrations.findByRegistrationId("auth0");
+        this.nuserService = nuserService;
     }
 
-    @PostMapping("/user")
+
+    @PostMapping
     public String add(@RequestBody Nuser nuser) {
         nuserService.adduser(nuser);
         return "New account has been made succesfull!";
     }
 
-    @PostMapping("/user/logout")
+    @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
         // send logout URL to client so they can initiate logout
         StringBuilder logoutUrl = new StringBuilder();
@@ -52,31 +52,28 @@ public class NuserController {
         return ResponseEntity.ok().body(logoutDetails);
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<?> getUser(@AuthenticationPrincipal OAuth2User user) {
-        if (user == null) {
+    @GetMapping
+    public ResponseEntity<?> getUser(@AuthenticationPrincipal OAuth2User ouser) {
+        if (ouser == null) {
             return new ResponseEntity<>("", HttpStatus.OK);
         } else {
-            return ResponseEntity.ok().body(user.getAttributes());
-
+            Nuser user = nuserService.getuserbyemail(ouser.getAttribute("email"));
+            return ResponseEntity.ok().body(user);
         }
     }
 
-    @GetMapping("/user/userpage")
-    public ResponseEntity<?> userpage(@AuthenticationPrincipal OAuth2User userauth)
+    @GetMapping("/allotherusers")
+    public ResponseEntity<?> getAllOtherUsers(@AuthenticationPrincipal OAuth2User ouser)
     {
-        if (userauth == null)
+        if(ouser == null)
         {
-            return new ResponseEntity<>("", HttpStatus.OK);
+          return new ResponseEntity<>("", HttpStatus.OK);
         }
-            else
-            {
-                String enteredemail = userauth.getAttribute("email").toString();
-                Nuser user = nuserService.getuser(enteredemail);
-                return ResponseEntity.ok().body(user);
-            }
+        else
+        {
+            return ResponseEntity.ok().body(nuserService.getOtherUsersByEmail(ouser.getAttribute("email")));
+        }
     }
-
 
 
 }

@@ -9,13 +9,9 @@ class AppBackApplicationTests {
 
 	@Test
 	void contextLoads() {
-		NuserService nuserService = new NuserService();
-	}
-
-	@Test
-	void LoadUserwithemail()
-	{
 
 	}
+
+	
 
 }

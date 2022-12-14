@@ -10,12 +10,15 @@ public abstract class BaseUser {
 
     @Column(name = "email", unique = true)
     private String email;
-
+    @Column
     private String firstname;
+    @Column
     private String lastname;
+    @Column
     private String insertion;
+    @Column
     private LocalDate birthdate;
-    /*private boolean FullyRegistered;*/
+
 
     public String getEmail() {
         return email;
@@ -34,6 +37,7 @@ public abstract class BaseUser {
         this.lastname = lastname;
         this.insertion = insertion;
         this.birthdate = birthdate;
+
     }
 
     public BaseUser(long id, String firstname, String lastname, String insertion, LocalDate birthdate) {
