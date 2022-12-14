@@ -2,13 +2,14 @@ package com.jet.appback.services;
 
 import com.jet.appback.models.Liked;
 import com.jet.appback.repository.LikedRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class LikedService {
-
+    @Autowired
     private LikedRepository likedRepository;
 
     public List<Liked> getAllLikesFromUserById(long userid)

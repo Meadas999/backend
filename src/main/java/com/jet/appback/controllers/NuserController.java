@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin("http://localhost:3000/")
 @RestController
 @RequestMapping("/user")
 public class NuserController {

@@ -46,19 +46,6 @@ public class SecurityConfig   {
                 .oauth2Login();
         return http.build();
     }
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:3000")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedHeaders("include")
-                        .allowCredentials(true).maxAge(3600);
-            }
-        };
-    }
 
     @Bean
     public RequestCache refererRequestCache() {
@@ -74,24 +61,7 @@ public class SecurityConfig   {
         };
     }
 
-    /*@Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-*//*
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-*//*
-        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH"));
-        configuration.setAllowCredentials(true);
-        //the below three lines will add the relevant CORS response headers
-            configuration.addAllowedOrigin("*");
-            configuration.addAllowedHeader("*");
-            configuration.addAllowedMethod("*");
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }*/
-
-    /*@Bean
+    @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
@@ -105,5 +75,5 @@ public class SecurityConfig   {
 
             }
         };
-    }*/
+    }
 }
