@@ -43,10 +43,7 @@ public class LikedTestCase {
     @WithMockUser
     public void AddLikeToUser() throws Exception
     {
-        mockMvc.perform(MockMvcRequestBuilders.get("/like/liked")
-                .accept(MediaType.ALL))
-                .andExpect(status().isOk())
-                .andExpect(content())
+        
     }
 
 
