@@ -43,6 +43,14 @@ public class Reject {
         this.id = id;
     }
 
+    public Nuser getUser() {
+        return user;
+    }
+
+    public void setUser(Nuser user) {
+        this.user = user;
+    }
+
     public Nuser getRejecteduser() {
         return rejecteduser;
     }

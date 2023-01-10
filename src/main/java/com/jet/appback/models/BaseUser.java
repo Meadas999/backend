@@ -40,8 +40,15 @@ public abstract class BaseUser {
 
     }
 
-    public BaseUser(long id, String firstname, String lastname, String insertion, LocalDate birthdate) {
+    public BaseUser(String firstname, String lastname, String insertion) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.insertion = insertion;
+    }
+
+    public BaseUser(long id, String email,String firstname, String lastname, String insertion, LocalDate birthdate) {
         this.id = id;
+        this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
         this.insertion = insertion;

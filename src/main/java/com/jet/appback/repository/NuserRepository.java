@@ -1,5 +1,6 @@
 package com.jet.appback.repository;
 
+import com.jet.appback.models.Liked;
 import com.jet.appback.models.Nuser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +14,9 @@ public interface NuserRepository extends JpaRepository<Nuser,Long> {
     Nuser findByEmailAddress(@Param("email")String email);
     @Query(value = "SELECT id FROM BaseUser WHERE email = :email", nativeQuery = true)
     long findIdByEmail(@Param("email")String email);
-    List<Nuser> findAllByEmailIsNotContaining(String email);
+    List<Nuser> findAllByEmailIsNotContainingAndGenderIsNot(String email, String gender);
+
+
 
 
 }

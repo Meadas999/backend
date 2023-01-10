@@ -1,16 +1,26 @@
 package com.jet.appback.services;
 
+import com.jet.appback.models.Liked;
 import com.jet.appback.models.Nuser;
+import com.jet.appback.models.Reject;
+import com.jet.appback.repository.LikedRepository;
 import com.jet.appback.repository.NuserRepository;
+import com.jet.appback.repository.RejectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class NuserService {
     @Autowired
     private NuserRepository nuserRepository;
+
+    @Autowired
+    private LikedRepository likedRepository;
+    @Autowired
+    private RejectRepository rejectRepository;
 
     public List<Nuser> list()
     {
@@ -38,6 +48,7 @@ public class NuserService {
     }
     public Nuser getuserbyemail(String email)
     {
+
         Nuser user = nuserRepository.findByEmailAddress(email);
         if(user != null)
         {
@@ -45,7 +56,7 @@ public class NuserService {
         }
         else
         {
-            throw new RuntimeException("User doesn't exist");
+            return null;
         }
 
     }
@@ -65,7 +76,21 @@ public class NuserService {
 
     public List<Nuser> getOtherUsersByEmail(String email)
     {
-       List<Nuser> users = nuserRepository.findAllByEmailIsNotContaining(email);
+        Nuser user = nuserRepository.findByEmailAddress(email);
+       List<Liked> likes = likedRepository.findAllByUserId(user.getId());
+       List<Reject> rejects = rejectRepository.findAllByUserId(user.getId());
+       List<Nuser> users = nuserRepository.findAllByEmailIsNotContainingAndGenderIsNot(email, user.getGender());
+       List<Nuser> likedusers = new ArrayList<>();
+       List<Nuser> rejectedusers = new ArrayList<>();
+        for (Liked l: likes){
+           likedusers.add(l.getLikeduser());
+        }
+        for(Reject r: rejects){
+            rejectedusers.add(r.getRejecteduser());
+        }
+        users.removeAll(likedusers);
+        users.removeAll(rejectedusers);
+
        return users;
     }
 

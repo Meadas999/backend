@@ -39,14 +39,6 @@ public class LikedController {
             like.setLiked_date(LocalDate.now());
             likedService.addLike(like);
             return ResponseEntity.ok().body("Person has been successfully liked");
-
         }
     }
-
-    /*@GetMapping("/likes")
-    public ResponseEntity<?>GetAllLikedUsers()
-    {
-
-    }*/
-
 }

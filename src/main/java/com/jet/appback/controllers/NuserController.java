@@ -1,5 +1,6 @@
 package com.jet.appback.controllers;
 
+import com.jet.appback.formModels.Registeruser;
 import com.jet.appback.models.Nuser;
 import com.jet.appback.services.NuserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @CrossOrigin("http://localhost:3000/")
@@ -27,16 +25,18 @@ public class NuserController {
     private NuserService nuserService;
     private ClientRegistration registration;
 
-    public NuserController(ClientRegistrationRepository registrations, NuserService nuserService ) {
+    public NuserController(ClientRegistrationRepository registrations, NuserService nuserService) {
         this.registration = registrations.findByRegistrationId("auth0");
         this.nuserService = nuserService;
     }
 
 
     @PostMapping
-    public String add(@RequestBody Nuser nuser) {
+    public ResponseEntity<?> add(@AuthenticationPrincipal OAuth2User ouser, @RequestBody Registeruser user) {
+        Nuser nuser = new Nuser(user);
+        nuser.setEmail(ouser.getAttribute("email"));
         nuserService.adduser(nuser);
-        return "New account has been made succesfull!";
+        return new ResponseEntity<>("User has been registered", HttpStatus.OK);
     }
 
     @PostMapping("/logout")
@@ -55,26 +55,33 @@ public class NuserController {
 
     @GetMapping
     public ResponseEntity<?> getUser(@AuthenticationPrincipal OAuth2User ouser) {
-        if (ouser == null) {
-            return new ResponseEntity<>("", HttpStatus.OK);
-        } else {
-            Nuser user = nuserService.getuserbyemail(ouser.getAttribute("email"));
-            return ResponseEntity.ok().body(user);
+        try {
+            if (ouser == null) {
+                return new ResponseEntity<>("User is not logged in.", HttpStatus.BAD_REQUEST);
+            } else {
+                if (nuserService.getuserbyemail(ouser.getAttribute("email")) != null) {
+                    Nuser user = nuserService.getuserbyemail(ouser.getAttribute("email"));
+                    return ResponseEntity.ok().body(user);
+                } else {
+                    return new ResponseEntity<>("", HttpStatus.OK);
+                }
+            }
+        }
+        catch (Exception e){
+            return ResponseEntity.badRequest().body("Something went wrong");
         }
     }
 
     @GetMapping("/allotherusers")
-    public ResponseEntity<?> getAllOtherUsers(@AuthenticationPrincipal OAuth2User ouser)
-    {
-        if(ouser == null)
-        {
-          return new ResponseEntity<>("", HttpStatus.OK);
-        }
-        else
-        {
-            return ResponseEntity.ok().body(nuserService.getOtherUsersByEmail(ouser.getAttribute("email")));
+    public ResponseEntity<?> getAllOtherUsers(@AuthenticationPrincipal OAuth2User ouser) {
+        try {
+            if (ouser == null) {
+                return new ResponseEntity<>("", HttpStatus.OK);
+            } else {
+                return ResponseEntity.ok().body(nuserService.getOtherUsersByEmail(ouser.getAttribute("email")));
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
         }
     }
-
-
 }
