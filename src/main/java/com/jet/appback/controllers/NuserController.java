@@ -73,7 +73,7 @@ public class NuserController {
     }
 
     @GetMapping("/allotherusers")
-    public ResponseEntity<?> getAllOtherUsers(@AuthenticationPrincipal OAuth2User ouser) {
+    public ResponseEntity<Object> getAllOtherUsers(@AuthenticationPrincipal OAuth2User ouser) {
         try {
             if (ouser == null) {
                 return new ResponseEntity<>("", HttpStatus.OK);

@@ -26,7 +26,7 @@ public class LikedController {
     }
 
     @PostMapping("/liked")
-    public ResponseEntity<?> AddLikeToUser(@AuthenticationPrincipal OAuth2User ouser, @RequestBody Liked like)
+    public ResponseEntity<Object> AddLikeToUser(@AuthenticationPrincipal OAuth2User ouser, @RequestBody Liked like)
     {
         if(like == null || ouser == null)
         {

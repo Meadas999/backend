@@ -29,7 +29,7 @@ public class RejectController {
         this.nuserService = nuserService;
     }
 @PostMapping
-    public ResponseEntity<?> addreject(@AuthenticationPrincipal OAuth2User user, @RequestBody Reject reject)
+    public ResponseEntity<Object> addreject(@AuthenticationPrincipal OAuth2User user, @RequestBody Reject reject)
     {
         try
         {
