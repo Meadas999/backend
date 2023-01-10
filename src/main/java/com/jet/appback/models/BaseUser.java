@@ -1,55 +1,83 @@
 package com.jet.appback.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 @Entity
 public abstract class BaseUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private long id;
 
-    private String FirstName;
+    @Column(name = "email", unique = true)
+    private String email;
+    @Column
+    private String firstname;
+    @Column
+    private String lastname;
+    @Column
+    private String insertion;
+    @Column
+    private LocalDate birthdate;
 
-    private String LastName;
-    private String Insertion;
-    private LocalDate Birthdate;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+
+    }
 
     public BaseUser() {
     }
 
-    public BaseUser(int id, String firstName, String lastName, String insertion, LocalDate birthdate) {
-        Id = id;
-        FirstName = firstName;
-        LastName = lastName;
-        Insertion = insertion;
-        Birthdate = birthdate;
+    public BaseUser(String firstname, String lastname, String insertion, LocalDate birthdate) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.insertion = insertion;
+        this.birthdate = birthdate;
+
     }
 
-    public int getId()
+    public BaseUser(String firstname, String lastname, String insertion) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.insertion = insertion;
+    }
+
+    public BaseUser(long id, String email,String firstname, String lastname, String insertion, LocalDate birthdate) {
+        this.id = id;
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.insertion = insertion;
+        this.birthdate = birthdate;
+    }
+
+
+    public long getId()
     {
-        return Id;
+        return id;
     }
     public void setId(int id)
     {
-        this.Id = id;
+        this.id = id;
     }
-    public String getFirstName() {return FirstName;}
-    public void setFirstName(String firstName){this.FirstName = firstName;}
-    public String getLastName() {return LastName;}
-    public void setLastName(String lastName){this.LastName = lastName;}
+    public String getFirstname() {return firstname;}
+    public void setFirstname(String firstname){this.firstname = firstname;}
+    public String getLastname() {return lastname;}
+    public void setLastname(String lastname){this.lastname = lastname;}
     public String getInsertion() {
-        return Insertion;
+        return insertion;
     }
     public void setInsertion(String insertion) {
-        Insertion = insertion;
+        this.insertion = insertion;
     }
     public LocalDate getBirthdate() {
-        return Birthdate;
+        return birthdate;
     }
     public void setBirthdate(LocalDate birthdate) {
-        Birthdate = birthdate;
+        this.birthdate = birthdate;
     }
 }
